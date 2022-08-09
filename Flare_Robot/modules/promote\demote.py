@@ -29,6 +29,7 @@ from Flare_Robot.modules.helper_funcs.extraction import (
 from Flare_Robot.modules.log_channel import loggable
 from Flare_Robot.modules.helper_funcs.alternate import send_message
 
+
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
         return isinstance(
@@ -39,7 +40,8 @@ async def is_register_admin(chat, user):
         )
     if isinstance(chat, types.InputPeerUser):
         return True
-    
+
+
 async def can_promote_users(message):
     result = await bot(
         functions.channels.GetParticipantRequest(
@@ -51,6 +53,7 @@ async def can_promote_users(message):
     return isinstance(p, types.ChannelParticipantCreator) or (
         isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.ban_users
     )
+
 
 async def can_ban_users(message):
     result = await bot(
@@ -64,7 +67,7 @@ async def can_ban_users(message):
         isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.ban_users
     )
 
-        
+
 @connection_status
 @bot_admin
 @can_promote
@@ -100,7 +103,7 @@ def ppromote(update: Update, context: CallbackContext) -> str:
     except:
         return
 
-    if user_member.status in ('administrator', 'creator'):
+    if user_member.status in ("administrator", "creator"):
         message.reply_text("How am I meant to promote someone that's already an admin?")
         return
 
@@ -146,6 +149,7 @@ def ppromote(update: Update, context: CallbackContext) -> str:
 
     return log_message
 
+
 @connection_status
 @bot_admin
 @can_promote
@@ -181,7 +185,7 @@ def midpromote(update: Update, context: CallbackContext) -> str:
     except:
         return
 
-    if user_member.status in ('administrator', 'creator'):
+    if user_member.status in ("administrator", "creator"):
         message.reply_text("How am I meant to promote someone that's already an admin?")
         return
 
@@ -222,6 +226,7 @@ def midpromote(update: Update, context: CallbackContext) -> str:
 
     return log_message
 
+
 @connection_status
 @bot_admin
 @can_promote
@@ -257,7 +262,7 @@ def lowpromote(update: Update, context: CallbackContext) -> str:
     except:
         return
 
-    if user_member.status in ('administrator', 'creator'):
+    if user_member.status in ("administrator", "creator"):
         message.reply_text("How am I meant to promote someone that's already an admin?")
         return
 
@@ -333,7 +338,7 @@ def ffullpromote(update: Update, context: CallbackContext) -> str:
     except:
         return
 
-    if user_member.status in ('administrator', 'creator'):
+    if user_member.status in ("administrator", "creator"):
         message.reply_text("How am I meant to promote someone that's already an admin?")
         return
 
@@ -380,6 +385,7 @@ def ffullpromote(update: Update, context: CallbackContext) -> str:
 
     return log_message
 
+
 @bot.on(events.NewMessage(pattern="/middemote(?: |$)(.*)"))
 async def middemote(dmod):
     if dmod.is_group:
@@ -421,7 +427,7 @@ async def middemote(dmod):
         await dmod.reply("**Failed to demote.**")
         return
 
-    
+
 @bot.on(events.NewMessage(pattern="/lowdemote(?: |$)(.*)"))
 async def lowdemote(dmod):
     if dmod.is_group:
@@ -463,7 +469,7 @@ async def lowdemote(dmod):
         await dmod.reply("**Failed to demote.**")
         return
 
-    
+
 @connection_status
 @bot_admin
 @can_promote
@@ -615,9 +621,15 @@ __help__ = """
 
 
 PROMOTE_HANDLER = DisableAbleCommandHandler("ppromote", ppromote, run_async=True)
-FULLPROMOTE_HANDLER = DisableAbleCommandHandler("ffullpromote", ffullpromote, run_async=True)
-LOW_PROMOTE_HANDLER = DisableAbleCommandHandler("lowpromote", lowpromote, run_async=True)
-MID_PROMOTE_HANDLER = DisableAbleCommandHandler("midpromote", midpromote, run_async=True)
+FULLPROMOTE_HANDLER = DisableAbleCommandHandler(
+    "ffullpromote", ffullpromote, run_async=True
+)
+LOW_PROMOTE_HANDLER = DisableAbleCommandHandler(
+    "lowpromote", lowpromote, run_async=True
+)
+MID_PROMOTE_HANDLER = DisableAbleCommandHandler(
+    "midpromote", midpromote, run_async=True
+)
 DEMOTE_HANDLER = DisableAbleCommandHandler("ddemote", ddemote, run_async=True)
 SET_TITLE_HANDLER = CommandHandler("atitle", set_atitle, run_async=True)
 
@@ -630,7 +642,7 @@ dispatcher.add_handler(SET_ATITLE_HANDLER)
 
 __mod_name__ = "Admins"
 __command_list__ = [
-    "promote", 
+    "promote",
     "fullpromote",
     "lowpromote",
     "midpromote",
